@@ -11,7 +11,7 @@ class TasbeehApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'SF Pro Display',
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(0xFF1E2A5E), 
+          seedColor: Color(0xFF1E2A5E),
           primary: Color(0xFF1E2A5E),
           secondary: Color(0xFFD6B5E2),
         ),
@@ -74,7 +74,7 @@ class _TasbeehHomeState extends State<TasbeehHome> {
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 4,
-            offset: Offset(0, 2), 
+            offset: Offset(0, 2),
           ),
         ],
         borderRadius: BorderRadius.circular(12),
@@ -82,8 +82,8 @@ class _TasbeehHomeState extends State<TasbeehHome> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFD6B5E2),
-          foregroundColor: Color(0xFF1E2A5E), 
+          backgroundColor: Color(0xFFD6B5E2), 
+          foregroundColor: Color(0xFF1E2A5E),
           padding: EdgeInsets.symmetric(vertical: 16),
           textStyle: TextStyle(
             fontSize: 20,
@@ -120,7 +120,7 @@ class _TasbeehHomeState extends State<TasbeehHome> {
       appBar: AppBar(
         backgroundColor: Color(0xFF1E2A5E),
         title: Text(
-          'برنامج التسبيح',
+          'تطبيق التسبيح',
           style: TextStyle(
             color: Color(0xFFD6B5E2),
             fontWeight: FontWeight.bold,
@@ -142,7 +142,7 @@ class _TasbeehHomeState extends State<TasbeehHome> {
             _buildCounter(_count3),
             SizedBox(height: 24),
             Text(
-              'اضغط على كل زر لزيادة العداد حتى $maxCount، بعدها يتصفّر تلقائياً.',
+              'لاتنسى اذكار الصباح و المساء،بعد كل صلاة فجر و العصر .',
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(0xFF1E2A5E)),
             ),
