@@ -1,150 +1,208 @@
+// تكلف Navigation Bar
 import 'package:flutter/material.dart';
 
-void main() => runApp(TasbeehApp());
+void main() {
+  runApp(const MyApp());
+}
 
-class TasbeehApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'عداد التسبيح',
+      title: 'Bottom Nav Demo',
       theme: ThemeData(
-        fontFamily: 'SF Pro Display',
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(0xFF1E2A5E),
-          primary: Color(0xFF1E2A5E),
-          secondary: Color(0xFFD6B5E2),
-        ),
-        useMaterial3: true,
+          primarySwatch: Colors.indigo,
+          scaffoldBackgroundColor: const Color.fromARGB(100, 173, 181, 189)
       ),
-      home: Directionality(
-        textDirection: TextDirection.rtl,
-        child: TasbeehHome(),
-      ),
+      home: const MainScreen(),
+      debugShowCheckedModeBanner: false,
     );
+
   }
+
 }
 
-class TasbeehHome extends StatefulWidget {
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
-  _TasbeehHomeState createState() => _TasbeehHomeState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _TasbeehHomeState extends State<TasbeehHome> {
-  int _count1 = 0;
-  int _count2 = 0;
-  int _count3 = 0;
-  static const int maxCount = 33;
+class _MainScreenState extends State<MainScreen> {
+  int _currentIndex = 0;
+  
+  final List<Widget> _pages = const [
+    HomePage(),
+    SearchPage(),
+    SettingsPage(),
+    AccountPage(),
+  ];
 
-  void _increment1() {
-    setState(() {
-      if (_count1 == maxCount) {
-        _count1 = 0;
-      } else {
-        _count1++;
-      }
-    });
-  }
-
-  void _increment2() {
-    setState(() {
-      if (_count2 == maxCount) {
-        _count2 = 0;
-      } else {
-        _count2++;
-      }
-    });
-  }
-
-  void _increment3() {
-    setState(() {
-      if (_count3 == maxCount) {
-        _count3 = 0;
-      } else {
-        _count3++;
-      }
-    });
-  }
-
-  Widget _buildButton(String label, VoidCallback onPressed) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFD6B5E2), 
-          foregroundColor: Color(0xFF1E2A5E),
-          padding: EdgeInsets.symmetric(vertical: 16),
-          textStyle: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Text(label),
-      ),
-    );
-  }
-
-  Widget _buildCounter(int value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
-        '$value / $maxCount',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF1E2A5E),
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
+  void _onTap(int index) {
+    setState(() => _currentIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Color(0xFF1E2A5E),
-        title: Text(
-          'تطبيق التسبيح',
-          style: TextStyle(
-            color: Color(0xFFD6B5E2),
-            fontWeight: FontWeight.bold,
+
+       body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
+
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTap,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.indigo[800],
+        unselectedItemColor: Colors.grey[600],
+        showUnselectedLabels: true,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: 'الرئيسية',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search_outlined),
+            activeIcon: Icon(Icons.search),
+            label: 'بحث',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
+            label: 'الإعدادات',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: 'حسابي',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// هذا كود الصفحة الرئيسية
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('الصفحة الرئيسية'),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(100,173, 181, 189)
+      ),
+      body: const Center(
+        child: Text(
+          '...اهلاً',
+          style: TextStyle(fontSize: 18),
         ),
+      ),
+    );
+  }
+}
+//هذا كود صفحة البحث
+class SearchPage extends StatelessWidget {
+  const SearchPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('صفحة البحث'),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildButton('سبحان الله', _increment1),
-            _buildCounter(_count1),
-            _buildButton('الحمد لله', _increment2),
-            _buildCounter(_count2),
-            _buildButton('الله أكبر', _increment3),
-            _buildCounter(_count3),
-            SizedBox(height: 24),
-            Text(
-              'لاتنسى اذكار الصباح و المساء،بعد كل صلاة فجر و العصر .',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFF1E2A5E)),
+            const TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'اكتب ...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: Center(
+                child: Text(
+                  'نتائج البحث ستظهر هنا',
+                  style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+//هذا كود صفحة الأعدادات
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('الإعدادات'),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: [
+          SwitchListTile(
+            title: const Text('إشعارات'),
+            value: true,
+            onChanged: (v) {},
+            secondary: const Icon(Icons.notifications),
+          ),
+          ListTile(
+            leading: const Icon(Icons.language),
+            title: const Text('اللغة'),
+            subtitle: const Text('العربية'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.lock),
+            title: const Text('الخصوصية والأمان'),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+//هذا كود صفحة الحساب
+class AccountPage extends StatelessWidget {
+  const AccountPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('حسابي'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+        child: Column(
+          children: [
+            const CircleAvatar(radius: 48, child: Icon(Icons.person, size: 48)),
+            const SizedBox(height: 12),
+            const Text('اسم المستخدم', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 6),
+            const Text('user@example.com', style: TextStyle(color: Colors.grey)),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.edit),
+              label: const Text('تعديل الملف الشخصي'),
             ),
           ],
         ),
